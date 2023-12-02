@@ -2,7 +2,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
-ALLEGRO_COLOR principal_pale_chestnut;
+ALLEGRO_COLOR negro_transparencia;
 
 ALLEGRO_FONT * lexend_regular[60];
 ALLEGRO_FONT * lexend_bold[60];
@@ -13,12 +13,13 @@ ALLEGRO_FONT * roboto_regular[60];
 ALLEGRO_FONT * roboto_thin[60];
 ALLEGRO_FONT * roboto_black[60];
 
-ALLEGRO_BITMAP *RECORDS;
+ALLEGRO_BITMAP *fondo1, *fondo2, *hombre1, *hombre2, *hombre3, *mujer1, *mujer2, *mujer3, *piso;
+
 
 int init_resources(){
     int inicializado_correctamente=1;
 
-    principal_pale_chestnut = al_map_rgb(222, 186, 192);
+    negro_transparencia = al_map_rgba(0, 0, 0, 100);
 
     for(int i=0; i<60; i++) {
         lexend_regular[i] = al_load_font("./media/fuentes/lexend/Lexend-Regular.ttf", i, 0);
@@ -41,8 +42,16 @@ int init_resources(){
             printf("ERROR: Hubo un problema al cargar las fuentes de roboto\n");
         }
     }
-    RECORDS = al_load_bitmap("./media/img/recordatorio_blanco.jpg");
-    if(!RECORDS){
+    fondo1 = al_load_bitmap("./media/img/fondo1.png");
+    fondo2 = al_load_bitmap("./media/img/fondo2.png");
+    piso = al_load_bitmap("./media/img/piso5000.png");
+    hombre1 = al_load_bitmap("./media/img/main1.1.png");
+    hombre2 = al_load_bitmap("./media/img/main1.2.png");
+    hombre3 = al_load_bitmap("./media/img/main1.3.png");
+    mujer1 = al_load_bitmap("./media/img/main2.1.png");
+    mujer2 = al_load_bitmap("./media/img/main2.2.png");
+    mujer3 = al_load_bitmap("./media/img/main2.3.png");
+    if(!fondo1 || !fondo2 || !piso || !hombre1 || !hombre2 || !hombre3 || !mujer1 || !mujer2 || !mujer3){
         inicializado_correctamente = 0;
         printf("ERROR: %i\n", al_get_errno());
         printf("ERROR: Hubo un problema al cargar las imagenes de img\n");
