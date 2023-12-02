@@ -1,3 +1,0 @@
-C:/Users/LEOPARD/Documents/Este equipo FERSA/NEW CLOVERS/IgualdadDeGenero/cmake-build-debug/CMakeFiles/IgualdadDeGenero.dir
-C:/Users/LEOPARD/Documents/Este equipo FERSA/NEW CLOVERS/IgualdadDeGenero/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/LEOPARD/Documents/Este equipo FERSA/NEW CLOVERS/IgualdadDeGenero/cmake-build-debug/CMakeFiles/rebuild_cache.dir
