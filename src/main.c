@@ -39,6 +39,7 @@ void main_camino_igualdad();
 void actualizar_display();
 
 int KEY_HOLD_RIGHT=0, KEY_HOLD_LEFT=0;
+int KEY_PRESS_looking_side = 0;
 
 struct Personaje {
     ALLEGRO_BITMAP * imagen;
@@ -46,48 +47,222 @@ struct Personaje {
     //float y;
     float colX;
     //float colY;
+    int estado_movimiento;
 } personaje;
 typedef struct {
-    ALLEGRO_FONT * fuente;
     char * mensaje;
+    int coordX;
     //int
 } MENSAJE;
-//MENSAJE Mensajes[10]
+MENSAJE Mensajes[30] = {{"Te encargas del niño y del quehacer de la casa"},
+//                        {"Hazme un sandwich"},
+//                        {"Una dama no se comporta con esos modales"},
+                        {"(Silbido)\nSolo a los hombres se les ven bien los tatuajes"},
+                        {"¿No quieres que te acompañe a tu casa?"},
+                        {"¿A que hora sales por el pan?"},
+                        //{"A las mujeres no hay que entenderlas, hay que quererlas"},
+                        //{"Mejor deja que un hombre lo haga"},
+                        {"Deberías ocupar vestido, ese traje te hace ver como un hombre, y que gei"},
+                        {"Pero si solo hay secretarias o sistentas"},
+                        //{"No te pongas esa camisa, es rosa porque es de niñas"},
+                        {"No ocupes aretes, no eres mujer"},
+                        {"Los hombres no lloran"},
+                        {"Aguantese como los machos"},
+                        {"Trabajas igual que una mujer"},
+                        {"Trabajos de ingenieros, no de princesitas"},
+};
 int COLISIONES[150][3];
 void inicializar_colisiones(){
     for(int i=0; i<150; i++){
         for(int j=0; j<3; j++)
             COLISIONES[i][j] = 0;
     }
-    COLISIONES[10][0] = 1;
-    COLISIONES[10][1] = 1;//Tipo interactiva
-    COLISIONES[10][1] = 2;//Tipo automatica (pensamiento)
-    COLISIONES[10][1] = 3;//Tipo automatica ()
+    //COLISIONES[10][0] = 1;
+    //COLISIONES[10][1] = 1;//Tipo interactiva
+    //COLISIONES[10][1] = 2;//Tipo automatica (pensamiento)
+    //COLISIONES[10][1] = 3;//Tipo automatica ()
+    //[j = 0] 1 indica que si hay colision
+    //[j = 1] INdica el modo como arriba
+    //[j = 2] Indica el indice dle arreglo de estructuras
+
+    COLISIONES[4][0] = 1;
+    COLISIONES[4][1] = 1;
+    COLISIONES[4][2] = 0;
+
+    COLISIONES[5][0] = 1;
+    COLISIONES[5][1] = 1;
+    COLISIONES[5][2] = 0;
+
+    COLISIONES[6][0] = 1;
+    COLISIONES[6][1] = 1;
+    COLISIONES[6][2] = 0;
+
+
+    COLISIONES[13][0] = 1;
+    COLISIONES[13][1] = 1;
+    COLISIONES[13][2] = 1;
 
     COLISIONES[14][0] = 1;
     COLISIONES[14][1] = 1;
+    COLISIONES[14][2] = 1;
 
     COLISIONES[15][0] = 1;
     COLISIONES[15][1] = 1;
+    COLISIONES[15][2] = 1;
 
-    COLISIONES[16][0] = 1;
-    COLISIONES[16][1] = 1;
 
+    COLISIONES[17][0] = 1;
+    COLISIONES[17][1] = 1;
+    COLISIONES[17][2] = 2;
+
+    COLISIONES[18][0] = 1;
+    COLISIONES[18][1] = 1;
+    COLISIONES[18][2] = 2;
+
+
+    COLISIONES[19][0] = 1;
+    COLISIONES[19][1] = 1;
+    COLISIONES[19][2] = 3;
+
+    COLISIONES[20][0] = 1;
+    COLISIONES[20][1] = 1;
+    COLISIONES[20][2] = 3;
+
+    COLISIONES[21][0] = 1;
+    COLISIONES[21][1] = 1;
+    COLISIONES[21][2] = 3;
+
+
+    COLISIONES[28][0] = 1;
+    COLISIONES[28][1] = 1;
+    COLISIONES[28][2] = 4;
+
+    COLISIONES[29][0] = 1;
+    COLISIONES[29][1] = 1;
+    COLISIONES[29][2] = 4;
+
+
+    COLISIONES[31][0] = 1;
+    COLISIONES[31][1] = 1;
+    COLISIONES[31][2] = 5;
+
+    COLISIONES[32][0] = 1;
+    COLISIONES[32][1] = 1;
+    COLISIONES[32][2] = 5;
+
+
+    COLISIONES[53][0] = 1;
+    COLISIONES[53][1] = 1;
+    COLISIONES[53][2] = 6;
+
+    COLISIONES[54][0] = 1;
+    COLISIONES[54][1] = 1;
+    COLISIONES[54][2] = 6;
+
+
+    COLISIONES[65][0] = 1;
+    COLISIONES[65][1] = 1;
+    COLISIONES[65][2] = 7;
+
+    COLISIONES[66][0] = 1;
+    COLISIONES[66][1] = 1;
+    COLISIONES[66][2] = 7;
+
+
+    COLISIONES[71][0] = 1;
+    COLISIONES[71][1] = 1;
+    COLISIONES[71][2] = 8;
+
+    COLISIONES[72][0] = 1;
+    COLISIONES[72][1] = 1;
+    COLISIONES[72][2] = 8;
+
+
+    COLISIONES[79][0] = 1;
+    COLISIONES[79][1] = 1;
+    COLISIONES[79][2] = 9;
+
+    COLISIONES[80][0] = 1;
+    COLISIONES[80][1] = 1;
+    COLISIONES[80][2] = 9;
+
+
+    COLISIONES[86][0] = 1;
+    COLISIONES[86][1] = 1;
+    COLISIONES[86][2] = 10;
+
+    COLISIONES[87][0] = 1;
+    COLISIONES[87][1] = 1;
+    COLISIONES[87][2] = 10;
 }
-int x, y, z;
+int x, colision = 0;
 void revisar_colisiones() {
     x=personaje.colX/100;
-    printf("%i, %f\n", x, personaje.colX);
+    //printf("%i, %f\n", x, personaje.colX);
     if(COLISIONES[x][0] == 1){
-        printf("TIENES COLISION CHAVO: %i, %f\n", x, personaje.colX);
-
+        //printf("TIENES COLISION CHAVO: %i, %f\n", x, personaje.colX);
+        if(colision!=2)
+            colision = 1;
     }
+    else
+        colision = 0;
+}
+int momento = 1, etapa = 0;
+
+void desplegarMENSAJE(int indice_Mensaje){
+    al_draw_filled_rectangle(100, 100, 1100, 400, negro_transparencia);
+    al_draw_text(roboto_regular[30], blanco, 600, 250, ALLEGRO_ALIGN_CENTER, Mensajes[indice_Mensaje].mensaje);
+    //printf("XDDD\n");
 }
 #define VALOR_MOVIMIENTO 2
 float distX_pantalla = 0;
 float MAX_DIM_IZQ=0, MAX_DIM_DER=1200;
+int inc_time_SPRITES = 0;
 void SPRITES_personajes(){
+    if(momento == 1){
+        if(etapa == 0){
+            int FLIP_horizontal;
+            if (KEY_PRESS_looking_side == 1)
+                FLIP_horizontal = ALLEGRO_FLIP_HORIZONTAL;
+            else
+                FLIP_horizontal = 0;
 
+            if(personaje.estado_movimiento == 1){
+                if(personaje.colX>4900){
+                    if(inc_time_SPRITES%3 == 0){
+                        al_draw_scaled_bitmap(hombre2, 0,0,30,63, personaje.x, 320, 70, 180, FLIP_horizontal);
+
+                    } else if (inc_time_SPRITES%3 == 1){
+                        al_draw_scaled_bitmap(hombre1, 0,0,30,63, personaje.x, 320, 70, 180, FLIP_horizontal);
+
+                    } else if (inc_time_SPRITES%3 == 2){
+                        al_draw_scaled_bitmap(hombre3, 0,0,30,63, personaje.x, 320, 70, 180, FLIP_horizontal);
+
+                    }
+                }
+                else{
+                    if(inc_time_SPRITES%3 == 0){
+                        al_draw_scaled_bitmap(mujer2, 0,0,30,63, personaje.x, 320, 70, 180, FLIP_horizontal);
+                    } else if (inc_time_SPRITES%3 == 1){
+                        al_draw_scaled_bitmap(mujer1, 0,0,30,63, personaje.x, 320, 70, 180, FLIP_horizontal);
+
+                    } else if (inc_time_SPRITES%3 == 2){
+                        al_draw_scaled_bitmap(mujer3, 0,0,30,63, personaje.x, 320, 70, 180, FLIP_horizontal);
+
+                    }
+                }
+            }
+            else{
+                if(personaje.colX>4900){
+                    al_draw_scaled_bitmap(hombre2, 0,0,30,63, personaje.x, 320, 70, 180, FLIP_horizontal);
+                }
+                else{
+                    al_draw_scaled_bitmap(mujer2, 0,0,30,63, personaje.x, 320, 70, 180, FLIP_horizontal);
+                }
+            }
+
+        }
+    }
 }
 void actualizar_display(){
     al_draw_scaled_bitmap(fondo1, 0,0,7939,500,distX_pantalla, 0, 7939, 500, 0);
@@ -97,9 +272,28 @@ void actualizar_display(){
     al_draw_scaled_bitmap(piso, 0,0,5000,100,distX_pantalla+10000, 500, 5000, 100, 0);
     //al_draw_filled_rectangle(0,0,1200,150, negro_transparencia);
     //al_draw_scaled_bitmap(fondo2, 0,0,1600,100,distX_pantalla+, 0, 15000, 600, 0);
-    al_draw_filled_rectangle(personaje.x, 400, personaje.x+50, 500, negro_transparencia);
+    //al_draw_filled_rectangle(personaje.x, 400, personaje.x+50, 500, negro_transparencia);
     //120 * 245
 
+    SPRITES_personajes();
+    al_draw_filled_rectangle(distX_pantalla+1100, 0, distX_pantalla+1300, 500, gris);
+    al_draw_filled_rectangle(distX_pantalla+2500, 0, distX_pantalla+2700, 500, gris);
+    al_draw_filled_rectangle(distX_pantalla+3800, 0, distX_pantalla+4000, 500, gris);
+    al_draw_filled_rectangle(distX_pantalla+4900, 0, distX_pantalla+5100, 500, gris);
+    al_draw_filled_rectangle(distX_pantalla+6200, 0, distX_pantalla+6400, 500, gris);
+
+    al_draw_filled_rectangle(distX_pantalla+7800, 0, distX_pantalla+8000, 500, gris);
+    al_draw_filled_rectangle(distX_pantalla+9100, 0, distX_pantalla+9300, 500, gris);
+
+    if(colision==1){
+        al_draw_filled_rectangle(400,500,800,600,negro);
+        al_draw_text(lexend_bold[20], blanco, 600, 540, ALLEGRO_ALIGN_CENTER, "Presiona X para interactuar");
+    }
+    if(colision==2){
+        desplegarMENSAJE(COLISIONES[x][2]);
+        //printf("XEDS");
+    }
+    //printf("LOOOOOOOOOOOOL: %i\n", colision);
     al_flip_display();
 }
 
@@ -156,11 +350,17 @@ void MOVIMIENTO_PERSONAJE(){
     }
 }
 
-
+void re_inicializar_variables(){
+    personaje.estado_movimiento = 0; //quieto
+    personaje.x = 0;
+    personaje.colX = 0;
+    distX_pantalla = 0;
+}
 void main_camino_igualdad(){
     int fin = 0;
     inicializar_colisiones();
-    al_clear_to_color(al_map_rgb(141,67,255));
+    re_inicializar_variables();
+    //al_clear_to_color(al_map_rgb(141,67,255));
     while(fin!=1){
         if(al_event_queue_is_empty(cola_eventos)){
             //pantalla_requiere_actualizacion=0;
@@ -178,7 +378,12 @@ void main_camino_igualdad(){
             //funcion de confirmacion() --TODO
             fin = 1;
         }else if(evento.type == ALLEGRO_EVENT_TIMER){
-            actualizar_display();
+            //actualizar_display();
+            if(evento.timer.source == timer_0_5){
+                inc_time_SPRITES++;
+                if(inc_time_SPRITES == 10000)
+                    inc_time_SPRITES = 0;
+            }
         }
         else if(evento.type == ALLEGRO_EVENT_DISPLAY_SWITCH_OUT){//Evento de que perdiste el foco de la ventana
             //printf("PERDISTE EL FOCO\n");
@@ -195,22 +400,34 @@ void main_camino_igualdad(){
             switch (evento.type) {
                 case ALLEGRO_EVENT_KEY_DOWN:
                     if(evento.keyboard.keycode == ALLEGRO_KEY_LEFT){
-                        if(KEY_HOLD_RIGHT != 1)
+                        if(KEY_HOLD_RIGHT != 1){
                             KEY_HOLD_LEFT = 1;
+                            KEY_PRESS_looking_side = 1;
+                            personaje.estado_movimiento=1;
+                        }
                     } else if(evento.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
-                        if(KEY_HOLD_LEFT != 1)
+                        if(KEY_HOLD_LEFT != 1){
                             KEY_HOLD_RIGHT = 1;
+                            KEY_PRESS_looking_side = 2;
+                            personaje.estado_movimiento=1;
+                        }
                     } else if (evento.keyboard.keycode == ALLEGRO_KEY_X){
-
+                        if(colision == 1){
+                            colision = 2;
+                        }
                     } else if (evento.keyboard.keycode == ALLEGRO_KEY_C){
-
+                        if(colision == 2){
+                            colision = 0;
+                        }
                     }
                     break;
                 case ALLEGRO_EVENT_KEY_UP:
                     if(evento.keyboard.keycode == ALLEGRO_KEY_LEFT){
                         KEY_HOLD_LEFT = 0;
+                        personaje.estado_movimiento=0;
                     } else if(evento.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
                         KEY_HOLD_RIGHT = 0;
+                        personaje.estado_movimiento=0;
                     }
                     break;
             }
@@ -236,6 +453,7 @@ int main(){
         al_register_event_source(cola_eventos, al_get_display_event_source(disp)); // FUENTE: eventos de la ventana
         al_register_event_source(cola_eventos, al_get_keyboard_event_source());// FUENTE: eventos del teclado
         al_start_timer(timer_0_01);
+        al_start_timer(timer_0_5);
 
         main_camino_igualdad();
 

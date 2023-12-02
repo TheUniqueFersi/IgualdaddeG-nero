@@ -2,7 +2,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
-ALLEGRO_COLOR negro_transparencia;
+ALLEGRO_COLOR negro_transparencia, gris, blanco, negro;
 
 ALLEGRO_FONT * lexend_regular[60];
 ALLEGRO_FONT * lexend_bold[60];
@@ -20,6 +20,9 @@ int init_resources(){
     int inicializado_correctamente=1;
 
     negro_transparencia = al_map_rgba(0, 0, 0, 100);
+    gris = al_map_rgb(86,81,87);
+    blanco = al_map_rgb(255,255,255);
+    negro = al_map_rgb(0,0,0);
 
     for(int i=0; i<60; i++) {
         lexend_regular[i] = al_load_font("./media/fuentes/lexend/Lexend-Regular.ttf", i, 0);
